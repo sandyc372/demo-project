@@ -47,6 +47,16 @@ export default class ApplicationData extends Component<any, any>{
     this.ref = React.createRef();
   }
 
+  componentDidUpdate(prevProps: any) {
+    if (this.props.selectedApplication.applicationName !== prevProps.selectedApplication.applicationName) {
+      this.setState({
+        clientId: null,
+        result: null,
+        isLoadingResult: false
+      })
+    }
+  }
+
   handleFormSubmit() {
     this.setState({
       isLoadingResult: true
