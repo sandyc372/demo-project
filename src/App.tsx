@@ -1,6 +1,7 @@
 import React from 'react';
 import environments from './config/environments';
 import { EnvironmentList } from './components/EnvironmentList/EnvironmentList';
+import { Routes } from './Routes';
 import { IAppState } from './IApp';
 import './App.css';
 
@@ -20,7 +21,8 @@ export default class App extends React.Component<any, IAppState> {
   }
 
   render() {
-    return (
+    return this.state.environment ? <Routes />
+    : (
       <div className="App">
         <EnvironmentList
           environments={environments}
