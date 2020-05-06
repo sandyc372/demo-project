@@ -22,7 +22,7 @@ const Form = React.forwardRef((props: any, ref: any) => {
   );
 })
 
-function Result(props: any) {
+export function Result(props: any) {
   return (
     <div style={{ textAlign: 'left', overflowY: 'scroll', maxHeight: window.innerHeight }}>
       <JSONPretty id="json-pretty" data={props.data}></JSONPretty>
@@ -30,7 +30,7 @@ function Result(props: any) {
   )
 }
 
-function Error(props: any) {
+export function Error(props: any) {
   return (
     <div className="alert alert-danger" role="alert">
       An error occurred
@@ -66,7 +66,7 @@ export default class ApplicationData extends Component<any, any>{
     this.setState({
       isLoadingResult: true,
       result: null,
-      data: null
+      error: null
     })
     getApplicationData(this.ref.current.value, this.props.selectedApplication.applicationName)
       .then((data: any) => {
@@ -105,7 +105,7 @@ export default class ApplicationData extends Component<any, any>{
               />
             )
             : this.state.dataType === DATA_TYPES.MASTER_DATA ?
-              (<MasterData />)
+              (<MasterData selectedApplication={this.props.selectedApplication}/>)
               : (
                 <>
                   <Form
