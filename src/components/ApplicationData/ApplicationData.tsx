@@ -3,6 +3,8 @@ import { getApplicationData } from '../../apis/applicationDataApi';
 import JSONPretty from 'react-json-pretty';
 import 'react-json-pretty/themes/monikai.css';
 import { MasterClientSelector } from '../MasterClientSelector/MasterClientSelector';
+import { MasterData } from '../MasterData/MasterData';
+import { DATA_TYPES } from '../../config/constants';
 
 const Form = React.forwardRef((props: any, ref: any) => {
   return (
@@ -43,7 +45,8 @@ export default class ApplicationData extends Component<any, any>{
     this.state = {
       clientId: null,
       result: null,
-      isLoadingResult: false
+      isLoadingResult: false,
+      dataType: null
     }
     this.ref = React.createRef();
   }
@@ -53,14 +56,17 @@ export default class ApplicationData extends Component<any, any>{
       this.setState({
         clientId: null,
         result: null,
-        isLoadingResult: false
+        isLoadingResult: false,
+        dataType: null
       })
     }
   }
 
   handleFormSubmit() {
     this.setState({
-      isLoadingResult: true
+      isLoadingResult: true,
+      result: null,
+      data: null
     })
     getApplicationData(this.ref.current.value, this.props.selectedApplication.applicationName)
       .then((data: any) => {
@@ -79,33 +85,44 @@ export default class ApplicationData extends Component<any, any>{
       })
   }
 
+  setDataType(dataType: DATA_TYPES) {
+    this.setState({
+      dataType
+    })
+  }
+
   render() {
     return (
       <>
-        <MasterClientSelector
-          clientButtonText="Get client data"
-          masterButtonText="Get master data"
-          onClientSelect={() => {}}
-          onMasterSelect={() => {}}
-        />
         {
-          /* this.state.result ?
-            (<Result data={this.state.result} />)
-            : (
-              this.state.isLoadingResult ?
-                (<div className="alert alert-primary" role="alert">
-                  Fetching data...
-                </div>)
-                : (
+          this.state.dataType === null ?
+            (
+              <MasterClientSelector
+                clientButtonText="Get client data"
+                masterButtonText="Get master data"
+                onClientSelect={() => { this.setDataType(DATA_TYPES.CLIENT_DATA) }}
+                onMasterSelect={() => { this.setDataType(DATA_TYPES.MASTER_DATA) }}
+              />
+            )
+            : this.state.dataType === DATA_TYPES.MASTER_DATA ?
+              (<MasterData />)
+              : (
+                <>
                   <Form
                     ref={this.ref}
                     onSubmit={() => { this.handleFormSubmit() }}
                   />
-                )
-            ) */
-        }
-        {
-          this.state.error ? (<Error />) : null
+                  {
+                    this.state.result ?
+                      (<Result data={this.state.result} />)
+                      : this.state.isLoadingResult ?
+                        (<div className="alert alert-primary" role="alert">
+                          Fetching data...
+                        </div>)
+                        : this.state.error ? (<Error />) : null
+                  }
+                </>
+              )
         }
       </>
     )

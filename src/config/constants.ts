@@ -1,0 +1,4 @@
+export enum DATA_TYPES  {
+  MASTER_DATA,
+  CLIENT_DATA
+}

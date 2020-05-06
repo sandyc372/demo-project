@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import { getApplications } from '../../apis/applicationsApi';
 import ApplicationList from '../../components/ApplicationList/ApplicationList';
 import ApplicationData from '../../components/ApplicationData/ApplicationData';
+import withEnvironment from '../../components/EnvironmentList/withEnvironment';
+import { IMainPageProps } from './IMainPage';
 
-export default class MainPage extends Component<any, any> {
+export class MainPage extends Component<IMainPageProps, any> {
   constructor(props: any) {
     super(props);
     this.state = {
@@ -81,3 +83,5 @@ export default class MainPage extends Component<any, any> {
     )
   }
 }
+
+export default withEnvironment(MainPage);
