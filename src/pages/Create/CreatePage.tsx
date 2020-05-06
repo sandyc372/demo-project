@@ -1,5 +1,5 @@
 import React from 'react';
-import { EnvironmentContext } from '../../components/EnvironmentList/EnvironmentContext';
+import withEnvironment from '../../components/EnvironmentList/withEnvironment';
 
 export class CreatePage extends React.Component<any, any> {
   render() {
@@ -7,14 +7,4 @@ export class CreatePage extends React.Component<any, any> {
   }
 }
 
-export default function (props: any) {
-  return (
-    <EnvironmentContext.Consumer>
-      {
-        ({ environment }) => (
-          <CreatePage environment={environment} />
-        )
-      }
-    </EnvironmentContext.Consumer>
-  )
-}
+export default withEnvironment(CreatePage);
