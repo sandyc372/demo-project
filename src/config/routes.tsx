@@ -1,4 +1,3 @@
-import React from 'react';
 import MainPage from '../pages/Get/MainPage';
 import CreatePage from '../pages/Create/CreatePage';
 

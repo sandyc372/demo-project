@@ -1,7 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 import { NavBar } from './components/NavBar/NavBar';
-import MainPage from './pages/Get/MainPage';
 import { routes } from './config/routes';
 
 export class Routes extends React.Component {
@@ -11,8 +10,8 @@ export class Routes extends React.Component {
         <NavBar />
         <Switch>
           {
-            routes.map((route) => (
-              <Route path={route.path}>
+            routes.map((route, index) => (
+              <Route path={route.path} key={index}>
                 <route.component />
               </Route>
             ))

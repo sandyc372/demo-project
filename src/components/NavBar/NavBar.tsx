@@ -8,8 +8,9 @@ export function NavBar(props: any) {
       <div className="collapse navbar-collapse" id="navbarNav">
         <ul className="navbar-nav">
           {
-            routes.map((route) => (
+            routes.map((route, index) => (
               <Route
+                key={index}
                 path={route.path}
                 children={({ match }) => (
                   <li className={`nav-item ${match ? "border border-primary rounded-lg" : ''}`}>

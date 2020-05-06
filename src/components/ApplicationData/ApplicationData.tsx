@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { getApplicationData } from '../../apis/applicationDataApi';
 import JSONPretty from 'react-json-pretty';
 import 'react-json-pretty/themes/monikai.css';
+import { MasterClientSelector } from '../MasterClientSelector/MasterClientSelector';
 
 const Form = React.forwardRef((props: any, ref: any) => {
   return (
@@ -81,8 +82,14 @@ export default class ApplicationData extends Component<any, any>{
   render() {
     return (
       <>
+        <MasterClientSelector
+          clientButtonText="Get client data"
+          masterButtonText="Get master data"
+          onClientSelect={() => {}}
+          onMasterSelect={() => {}}
+        />
         {
-          this.state.result ?
+          /* this.state.result ?
             (<Result data={this.state.result} />)
             : (
               this.state.isLoadingResult ?
@@ -95,7 +102,7 @@ export default class ApplicationData extends Component<any, any>{
                     onSubmit={() => { this.handleFormSubmit() }}
                   />
                 )
-            )
+            ) */
         }
         {
           this.state.error ? (<Error />) : null

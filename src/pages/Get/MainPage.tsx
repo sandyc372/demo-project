@@ -45,7 +45,7 @@ export default class MainPage extends Component<any, any> {
               </div>)
               : (
                 <>
-                  <div className="col-md-6">
+                  <div className="col-md-4">
                     <div className="card">
                       <div className="card-header"> Applications </div>
                       <div className="card-body">
@@ -57,7 +57,7 @@ export default class MainPage extends Component<any, any> {
                       </div>
                     </div>
                   </div>
-                  <div className="col-md-6">
+                  <div className="col-md-8">
                     {
                       this.state.selectedApplication ?
                         (
