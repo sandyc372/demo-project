@@ -48,29 +48,19 @@ export class MainPage extends Component<IMainPageProps, any> {
               : (
                 <>
                   <div className="col-md-4">
-                    <div className="card">
-                      <div className="card-header"> Applications </div>
-                      <div className="card-body">
-                        <ApplicationList
-                          applications={this.state.applications}
-                          selectedApplication={this.state.selectedApplication}
-                          handeApplicationSelect={(arg: any) => { this.handeApplicationSelect(arg) }}
-                        />
-                      </div>
-                    </div>
+                    <ApplicationList
+                      applications={this.state.applications}
+                      selectedApplication={this.state.selectedApplication}
+                      handeApplicationSelect={(arg: any) => { this.handeApplicationSelect(arg) }}
+                    />
                   </div>
                   <div className="col-md-8">
                     {
                       this.state.selectedApplication ?
                         (
-                          <div className="card">
-                            <div className="card-header">{this.state.selectedApplication.applicationName}</div>
-                            <div className="card-body">
-                              <ApplicationData
-                                selectedApplication={this.state.selectedApplication}
-                              />
-                            </div>
-                          </div>
+                          <ApplicationData
+                            selectedApplication={this.state.selectedApplication}
+                          />
                         )
                         : null
                     }

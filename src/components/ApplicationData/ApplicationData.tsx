@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { getApplicationData } from '../../apis/applicationDataApi';
 import JSONPretty from 'react-json-pretty';
 import 'react-json-pretty/themes/monikai.css';
-import { MasterClientSelector } from '../MasterClientSelector/MasterClientSelector';
+import { Selector } from '../Selector/Selector';
 import { MasterData } from '../MasterData/MasterData';
 import { DATA_TYPES } from '../../config/constants';
 
@@ -53,12 +53,7 @@ export default class ApplicationData extends Component<any, any>{
 
   componentDidUpdate(prevProps: any) {
     if (this.props.selectedApplication.applicationName !== prevProps.selectedApplication.applicationName) {
-      this.setState({
-        clientId: null,
-        result: null,
-        isLoadingResult: false,
-        dataType: null
-      })
+      this.resetState();
     }
   }
 
@@ -85,6 +80,19 @@ export default class ApplicationData extends Component<any, any>{
       })
   }
 
+  handleBack() {
+    this.resetState();
+  }
+
+  resetState() {
+    this.setState({
+      clientId: null,
+      result: null,
+      isLoadingResult: false,
+      dataType: null
+    })
+  }
+
   setDataType(dataType: DATA_TYPES) {
     this.setState({
       dataType
@@ -93,40 +101,56 @@ export default class ApplicationData extends Component<any, any>{
 
   render() {
     return (
-      <>
-        {
-          this.state.dataType === null ?
-            (
-              <MasterClientSelector
-                clientButtonText="Get client data"
-                masterButtonText="Get master data"
-                onClientSelect={() => { this.setDataType(DATA_TYPES.CLIENT_DATA) }}
-                onMasterSelect={() => { this.setDataType(DATA_TYPES.MASTER_DATA) }}
-              />
-            )
-            : this.state.dataType === DATA_TYPES.MASTER_DATA ?
-              (<MasterData selectedApplication={this.props.selectedApplication}/>)
-              : (
-                <>
-                  <Form
-                    ref={this.ref}
-                    onSubmit={() => { this.handleFormSubmit() }}
-                  />
-                  {
-                    this.state.result ?
-                      (<Result data={this.state.result} />)
-                      : this.state.isLoadingResult ?
-                        (<div className="alert alert-primary" role="alert">
-                          Fetching data...
-                        </div>)
-                        : this.state.error ? (<Error />) : null
-                  }
-                </>
+      <div className="card">
+        <div className="card-header">
+          <span>{this.props.selectedApplication.applicationName}</span>
+          {
+            this.state.dataType !== null ? (
+              <button
+                className="btn btn-sm btn-info float-right"
+                onClick={() => this.handleBack()}
+              >
+                Back
+              </button>
+            ) : null
+          }
+        </div>
+        <div className="card-body">
+          {
+            this.state.dataType === null ?
+              (
+                <Selector
+                  options={[{
+                    label: 'Get client data',
+                    onSelect: () => { this.setDataType(DATA_TYPES.CLIENT_DATA) }
+                  }, {
+                    label: 'Get master data',
+                    onSelect: () => { this.setDataType(DATA_TYPES.MASTER_DATA) }
+                  }]}
+                />
               )
-        }
-      </>
+              : this.state.dataType === DATA_TYPES.MASTER_DATA ?
+                (<MasterData selectedApplication={this.props.selectedApplication} />)
+                : (
+                  <>
+                    <Form
+                      ref={this.ref}
+                      onSubmit={() => { this.handleFormSubmit() }}
+                    />
+                    {
+                      this.state.result ?
+                        (<Result data={this.state.result} />)
+                        : this.state.isLoadingResult ?
+                          (<div className="alert alert-primary" role="alert">
+                            Fetching data...
+                          </div>)
+                          : this.state.error ? (<Error />) : null
+                    }
+                  </>
+                )
+          }
+        </div>
+      </div>
     )
-
-
   }
 }
