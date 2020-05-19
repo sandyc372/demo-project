@@ -6,7 +6,7 @@ import { routes } from './config/routes';
 export class Routes extends React.Component {
   render() {
     return (
-      <Router>
+      <Router basename="demo-project">
         <NavBar />
         <Switch>
           {
