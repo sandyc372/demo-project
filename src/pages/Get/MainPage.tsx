@@ -45,7 +45,8 @@ export class MainPage extends Component<IMainPageProps, any> {
                   Fetching applications...
                 </div>
               </div>)
-              : (
+              : this.state.applications && this.state.applications.length > 0 ? 
+              (
                 <>
                   <div className="col-md-4">
                     <ApplicationList
@@ -66,7 +67,7 @@ export class MainPage extends Component<IMainPageProps, any> {
                     }
                   </div>
                 </>
-              )
+              ) : null
           }
         </div>
       </div >

@@ -1,8 +1,8 @@
 export interface ISelectorProps {
-  options: SelectorOption[];
+  options: ISelectorOption[];
 }
 
-export interface SelectorOption {
+export interface ISelectorOption {
   label: string;
   onSelect: (data?: any) => void;
   data?: any;
